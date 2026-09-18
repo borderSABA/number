@@ -24,7 +24,8 @@ button, input { font: inherit; }
 button { -webkit-tap-highlight-color: transparent; }
 .app-shell { width: min(100%, 720px); min-height: 100dvh; margin: 0 auto; padding: env(safe-area-inset-top) 14px env(safe-area-inset-bottom); }
 .topbar { height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.brand { font-weight: 900; font-size: 22px; letter-spacing: .06em; }
+.brand { display: flex; align-items: baseline; gap: 7px; font-weight: 900; font-size: 22px; letter-spacing: .06em; }
+.version { color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: .02em; }
 .top-actions { display: flex; gap: 8px; }
 .icon-button { width: 42px; height: 42px; border: 0; border-radius: 12px; background: var(--panel); box-shadow: var(--shadow); color: var(--ink); font-weight: 800; cursor: pointer; }
 .screen { display: none; }
@@ -72,7 +73,8 @@ button { -webkit-tap-highlight-color: transparent; }
 .cell.error { color: var(--danger); background: var(--danger-soft); }
 .cell.conflict:not(.given) { color: var(--danger); }
 .notes { position: absolute; inset: 3px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); color: var(--memo); font-size: clamp(7px, 2.3vw, 13px); font-weight: 700; line-height: 1; }
-.note { display: grid; place-items: center; }
+.note { display: grid; place-items: center; border-radius: 999px; transition: background .12s ease, color .12s ease, transform .12s ease; }
+.note.match { background: var(--accent); color: #fff; font-weight: 900; transform: scale(1.08); }
 .tool-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0 10px; }
 .tool-button { min-height: 54px; border: 0; border-radius: 14px; background: white; color: var(--ink); font-size: 23px; font-weight: 900; box-shadow: 0 4px 18px rgba(15,23,42,.06); cursor: pointer; }
 .tool-button span { display: block; font-size: 10px; margin-top: 1px; color: var(--muted); }

@@ -123,7 +123,7 @@
       if(state.board[i]) cell.textContent=state.board[i];
       else if(state.notes[i] && state.notes[i].size){
         const wrap=document.createElement('div');wrap.className='notes';
-        for(let n=1;n<=9;n++){const s=document.createElement('span');s.className='note';s.textContent=state.notes[i].has(n)?n:'';wrap.appendChild(s);} cell.appendChild(wrap);
+        for(let n=1;n<=9;n++){const s=document.createElement('span');s.className='note';const has=state.notes[i].has(n);s.textContent=has?n:'';if(has && state.settings.sameNumber && selectedVal===n)s.classList.add('match');wrap.appendChild(s);} cell.appendChild(wrap);
       }
     });
     updatePadState();
