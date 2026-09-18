@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>ナンプレ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div class="brand">ナンプレ</div>
+      <div class="top-actions">
+        <button id="pauseBtn" class="icon-button" aria-label="一時停止">Ⅱ</button>
+        <button id="settingsBtn" class="icon-button" aria-label="設定">⚙</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="homeScreen" class="screen active">
+        <div class="hero">
+          <div class="hero-mark">9×9</div>
+          <h1>ナンプレ</h1>
+          <p>唯一解保証・Lv1〜10</p>
+        </div>
+
+        <div class="panel home-panel">
+          <div class="level-title">レベル選択</div>
+          <div id="levelGrid" class="level-grid" aria-label="レベル選択"></div>
+          <div id="levelDescription" class="level-description"></div>
+          <button id="newGameBtn" class="primary-button">新しい問題</button>
+          <button id="continueBtn" class="secondary-button hidden">続きから</button>
+        </div>
+      </section>
+
+      <section id="gameScreen" class="screen">
+        <div class="status-row">
+          <div class="status-chip"><span>Lv</span><strong id="levelLabel">1</strong></div>
+          <div class="status-chip score-chip"><span>難易度</span><strong id="difficultyLabel">—</strong></div>
+          <div id="timer" class="timer">00:00</div>
+        </div>
+
+        <div id="sourceBadge" class="source-badge hidden"></div>
+
+        <div id="board" class="board" role="grid" aria-label="ナンプレ盤面"></div>
+
+        <div class="tool-row">
+          <button id="undoBtn" class="tool-button">↶<span>戻す</span></button>
+          <button id="redoBtn" class="tool-button">↷<span>進む</span></button>
+          <button id="memoBtn" class="tool-button"><b>✎</b><span>メモ OFF</span></button>
+          <button id="eraseBtn" class="tool-button">⌫<span>消す</span></button>
+        </div>
+
+        <div id="numberPad" class="number-pad" aria-label="数字入力"></div>
+
+        <div class="game-actions">
+          <button id="checkBtn" class="primary-button">回答チェック</button>
+          <button id="saveQuitBtn" class="secondary-button">保存して戻る</button>
+        </div>
+      </section>
+    </main>
+
+    <div id="loadingOverlay" class="overlay hidden" aria-live="polite">
+      <div class="modal compact">
+        <div class="spinner"></div>
+        <h2>問題を生成中</h2>
+        <p id="loadingText">唯一解を確認しています…</p>
+      </div>
+    </div>
+
+    <div id="pauseOverlay" class="overlay hidden">
+      <div class="modal">
+        <h2>一時停止</h2>
+        <p>タイマーも停止しています。</p>
+        <button id="resumeBtn" class="primary-button">再開</button>
+        <button id="pauseHomeBtn" class="secondary-button">保存して戻る</button>
+      </div>
+    </div>
+
+    <div id="resultOverlay" class="overlay hidden">
+      <div class="modal result-modal">
+        <div class="result-icon">✓</div>
+        <h2>クリア</h2>
+        <div class="result-grid">
+          <div><span>レベル</span><strong id="resultLevel">—</strong></div>
+          <div><span>難易度</span><strong id="resultDifficulty">—</strong></div>
+          <div><span>タイム</span><strong id="resultTime">—</strong></div>
+        </div>
+        <button id="nextGameBtn" class="primary-button">同じレベルでもう一問</button>
+        <button id="resultHomeBtn" class="secondary-button">レベル選択へ</button>
+      </div>
+    </div>
+
+    <div id="settingsOverlay" class="overlay hidden">
+      <div class="modal settings-modal">
+        <h2>設定</h2>
+        <label class="setting-row"><span>重複を即時表示</span><input id="conflictSetting" type="checkbox" checked></label>
+        <label class="setting-row"><span>同じ数字を強調</span><input id="sameNumberSetting" type="checkbox" checked></label>
+        <label class="setting-row"><span>入力時に同数字メモを削除</span><input id="autoMemoSetting" type="checkbox" checked></label>
+        <button id="closeSettingsBtn" class="primary-button">閉じる</button>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+
+  <script src="js/sudoku.js"></script>
+  <script src="js/hard-puzzles.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
