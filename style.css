@@ -48,11 +48,14 @@ button { -webkit-tap-highlight-color: transparent; }
 .primary-button { border: 0; background: var(--strong); color: white; }
 .secondary-button { border: 1px solid var(--line); background: white; color: var(--ink); margin-top: 10px; }
 .hidden { display: none !important; }
-.status-row { display: grid; grid-template-columns: auto auto 1fr; gap: 8px; align-items: center; margin: 4px 0 10px; }
+.status-row { display: grid; grid-template-columns: auto auto auto 1fr; gap: 8px; align-items: center; margin: 4px 0 10px; }
 .status-chip { display: flex; align-items: baseline; gap: 6px; background: white; padding: 8px 10px; border-radius: 12px; box-shadow: 0 4px 18px rgba(15,23,42,.06); }
 .status-chip span { color: var(--muted); font-size: 11px; font-weight: 800; }
 .status-chip strong { font-size: 15px; }
 .score-chip { min-width: 96px; }
+
+.candidate-button { min-height: 38px; padding: 0 12px; border: 1px solid #93c5fd; border-radius: 12px; background: #eff6ff; color: #1d4ed8; font-size: 12px; font-weight: 900; cursor: pointer; white-space: nowrap; }
+.candidate-button:active { transform: translateY(1px); }
 .timer { text-align: right; font-variant-numeric: tabular-nums; font-size: 21px; font-weight: 900; letter-spacing: .04em; }
 .source-badge { margin: 0 0 8px; padding: 8px 10px; border-radius: 10px; background: #fff7ed; color: #9a3412; font-size: 11px; font-weight: 800; line-height: 1.4; }
 .board { width: min(100%, 590px); aspect-ratio: 1 / 1; margin: 0 auto; display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); background: var(--strong); border: 3px solid var(--strong); box-shadow: var(--shadow); touch-action: manipulation; }
@@ -103,7 +106,9 @@ button { -webkit-tap-highlight-color: transparent; }
   .panel { border-radius: 20px; padding: 14px; }
   .level-grid { gap: 6px; }
   .level-button { min-height: 50px; border-radius: 12px; }
-  .status-row { margin-top: 0; }
+  .status-row { grid-template-columns: auto auto 1fr; margin-top: 0; }
+  .candidate-button { grid-column: 1 / span 2; grid-row: 2; justify-self: start; min-height: 34px; }
+  .timer { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
   .tool-row { margin-top: 9px; gap: 5px; }
   .number-pad { gap: 4px; }
   .num-button { border-radius: 9px; }

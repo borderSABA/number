@@ -49,6 +49,7 @@
     $('#newGameBtn').addEventListener('click',()=>startNew(state.level));
     $('#continueBtn').addEventListener('click',continueSaved);
     $('#memoBtn').addEventListener('click',()=>{state.memo=!state.memo; updateMemoButton();});
+    $('#autoNotesBtn').addEventListener('click',fillCandidates);
     $('#eraseBtn').addEventListener('click',eraseSelected);
     $('#undoBtn').addEventListener('click',undo); $('#redoBtn').addEventListener('click',redo);
     $('#checkBtn').addEventListener('click',checkAnswer);
@@ -150,6 +151,26 @@
     paintBoard();saveGame();
   }
   function removePeerNote(i,n){const r=Math.floor(i/9),c=i%9,b=core.boxIndex(r,c);for(let j=0;j<81;j++){const rr=Math.floor(j/9),cc=j%9;if(rr===r||cc===c||core.boxIndex(rr,cc)===b)state.notes[j].delete(n);}}
+
+  function fillCandidates(){
+    if(!state.board)return;
+    const masks=core.masksFor(state.board);
+    if(!masks){toast('重複があるため候補入力できません');return;}
+    pushUndo();
+    let filled=0, zero=0;
+    for(let i=0;i<81;i++){
+      if(state.board[i]){state.notes[i].clear();continue;}
+      const mask=core.candidateMask(state.board,i,masks);
+      const next=new Set();
+      for(let n=1;n<=9;n++)if(mask&(1<<(n-1)))next.add(n);
+      state.notes[i]=next;
+      if(next.size)filled++;else zero++;
+    }
+    state.errors.clear();
+    paintBoard();saveGame();
+    toast(zero?`候補を入力しました（候補なし ${zero}マス）`:`${filled}マスに候補を入力しました`);
+  }
+
   function eraseSelected(){const i=state.selected;if(i<0||state.given[i])return;pushUndo();state.board[i]=0;state.notes[i].clear();state.errors.delete(i);paintBoard();saveGame();}
   function undo(){if(!state.undo.length)return;state.redo.push(snapshot());restore(state.undo.pop());}
   function redo(){if(!state.redo.length)return;state.undo.push(snapshot());restore(state.redo.pop());}
@@ -199,6 +220,7 @@
     if(/^[1-9]$/.test(e.key)){inputNumber(Number(e.key));e.preventDefault();return;}
     if(e.key==='Backspace'||e.key==='Delete'||e.key==='0'){eraseSelected();e.preventDefault();return;}
     if(e.key.toLowerCase()==='n'||e.key===' '){state.memo=!state.memo;updateMemoButton();e.preventDefault();return;}
+    if(e.key.toLowerCase()==='a'){fillCandidates();e.preventDefault();return;}
     if(state.selected<0)return; let r=Math.floor(state.selected/9),c=state.selected%9;
     if(e.key==='ArrowUp')r=Math.max(0,r-1);else if(e.key==='ArrowDown')r=Math.min(8,r+1);else if(e.key==='ArrowLeft')c=Math.max(0,c-1);else if(e.key==='ArrowRight')c=Math.min(8,c+1);else return;
     state.selected=r*9+c;paintBoard();e.preventDefault();
